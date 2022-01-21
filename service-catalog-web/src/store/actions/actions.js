@@ -1,7 +1,7 @@
 import SessionStorage from "../../helpers/sessionStorage";
 
 export const addService = (data) => async (dispatch, getState) => {
-  let url = `https://service-catalog-api-production.herokuapp.com/addService`;
+  let url = `<endpoint URL>`;
   const { token } = getState().auth;
   fetch(url, {
     method: "POST",
@@ -31,7 +31,7 @@ export const addService = (data) => async (dispatch, getState) => {
 };
 
 export const updateService = (data) => async (dispatch, getState) => {
-  let url = `https://service-catalog-api-production.herokuapp.com/updateService`;
+  let url = `<endpoint URL>`;
   const { token } = getState().auth;
   fetch(url, {
     method: "POST",
@@ -61,7 +61,7 @@ export const updateService = (data) => async (dispatch, getState) => {
 };
 
 export const deleteService = (data) => async (dispatch, getState) => {
-  let url = `https://service-catalog-api-production.herokuapp.com/deleteService`;
+  let url = `<endpoint URL>`;
   const { token } = getState().auth;
   fetch(url, {
     method: "DELETE",
@@ -97,7 +97,7 @@ export const listServices =
     const labelUrl = `&label=${encodeURIComponent(label)}`;
     const isNameEntered = !!name.length;
     const isLabelEntered = !!label.length;
-    let url = `https://service-catalog-api-production.herokuapp.com/listServices?page=${page}${
+    let url = `<endpoint URL>${page}${
       isNameEntered ? nameUrl : ""
     }${isLabelEntered ? labelUrl : ""}`;
     return fetch(url)
@@ -128,7 +128,7 @@ export const listServices =
   };
 
 export const getService = (serviceName) => async (dispatch) => {
-  let url = `https://service-catalog-api-production.herokuapp.com/getService?name=${encodeURIComponent(
+  let url = `<endpoint URL>?name=${encodeURIComponent(
     serviceName
   )}`;
   return fetch(url)
@@ -143,7 +143,7 @@ export const getService = (serviceName) => async (dispatch) => {
 };
 
 export const addUser = (data) => async (dispatch) => {
-  let url = `https://service-catalog-api-production.herokuapp.com/addUser`;
+  let url = `<endpoint URL>`;
   fetch(url, {
     method: "POST",
     mode: "cors",
@@ -176,7 +176,7 @@ export const addUser = (data) => async (dispatch) => {
 };
 
 export const loginUser = (data) => async (dispatch) => {
-  let url = `https://service-catalog-api-production.herokuapp.com/loginUser`;
+  let url = `<endpoint URL>`;
   fetch(url, {
     method: "POST",
     mode: "cors",
