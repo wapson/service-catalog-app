@@ -25,6 +25,8 @@ const servicesList = produce((draftState, action) => {
       );
       draftState.splice(findIndex, 1, data);
       break;
+    case "CLEAR_SERVICE_LIST":
+      return initialState;
     default:
       return draftState;
   }

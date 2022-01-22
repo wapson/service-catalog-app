@@ -19,7 +19,6 @@ func MainGroup(e *echo.Echo) {
 
 	e.GET("/listServices", handlers.ListServices)
 	e.GET("/getService", handlers.GetService)
-	
 	// User
 	e.POST("/addUser", handlers.AddUser)
 	e.POST("/loginUser", handlers.LoginUser)

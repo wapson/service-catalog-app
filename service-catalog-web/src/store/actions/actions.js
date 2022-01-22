@@ -1,7 +1,7 @@
 import SessionStorage from "../../helpers/sessionStorage";
 
 export const addService = (data) => async (dispatch, getState) => {
-  let url = `<endpoint URL>`;
+  let url = `<Insert endopoint url>/addService`;
   const { token } = getState().auth;
   fetch(url, {
     method: "POST",
@@ -31,7 +31,7 @@ export const addService = (data) => async (dispatch, getState) => {
 };
 
 export const updateService = (data) => async (dispatch, getState) => {
-  let url = `<endpoint URL>`;
+  let url = `<Insert endopoint url>/updateService`;
   const { token } = getState().auth;
   fetch(url, {
     method: "POST",
@@ -61,7 +61,7 @@ export const updateService = (data) => async (dispatch, getState) => {
 };
 
 export const deleteService = (data) => async (dispatch, getState) => {
-  let url = `<endpoint URL>`;
+  let url = `<Insert endopoint url>/deleteService`;
   const { token } = getState().auth;
   fetch(url, {
     method: "DELETE",
@@ -90,6 +90,27 @@ export const deleteService = (data) => async (dispatch, getState) => {
     });
 };
 
+export const listFilteredServices =
+  ({ page = 1, name = "", isName, isNextPage }) =>
+  async (dispatch) => {
+    const nameUrl = `&name=${encodeURIComponent(name)}`;
+    const labelUrl = `&label=${encodeURIComponent(name)}`;
+    let url = `<Insert endopoint url>/listServices?page=${page}${
+      isName ? nameUrl : labelUrl
+    }`;
+    if (!name.length) return dispatch(clearFilteredList());
+    return fetch(url)
+      .then((res) => res.json())
+      .then((responseData) => {
+        dispatch({
+          type: "FILTERED_LIST_SERVICES_SUCCESS",
+          servicesList: responseData,
+          isNextPage,
+        });
+        return responseData;
+      });
+  };
+
 export const listServices =
   ({ page = 1, name = "", isNextFilteredPage = false, label = "" }) =>
   async (dispatch) => {
@@ -97,15 +118,12 @@ export const listServices =
     const labelUrl = `&label=${encodeURIComponent(label)}`;
     const isNameEntered = !!name.length;
     const isLabelEntered = !!label.length;
-    let url = `<endpoint URL>${page}${
+    let url = `<Insert endopoint url>/listServices?page=${page}${
       isNameEntered ? nameUrl : ""
     }${isLabelEntered ? labelUrl : ""}`;
     return fetch(url)
       .then((res) => res.json())
       .then((responseData) => {
-        if (responseData.error) {
-          throw new Error(responseData.error.message);
-        }
         if (isNameEntered || isLabelEntered) {
           dispatch({
             type: "FILTERED_LIST_SERVICES_SUCCESS",
@@ -118,17 +136,11 @@ export const listServices =
             servicesList: responseData,
           });
         return responseData;
-      })
-      .catch((error) => {
-        dispatch({
-          type: "LIST_SERVICES_FAIL",
-          error,
-        });
       });
   };
 
 export const getService = (serviceName) => async (dispatch) => {
-  let url = `<endpoint URL>?name=${encodeURIComponent(
+  let url = `<Insert endopoint url>/getService?name=${encodeURIComponent(
     serviceName
   )}`;
   return fetch(url)
@@ -143,7 +155,7 @@ export const getService = (serviceName) => async (dispatch) => {
 };
 
 export const addUser = (data) => async (dispatch) => {
-  let url = `<endpoint URL>`;
+  let url = `<Insert endopoint url>/addUser`;
   fetch(url, {
     method: "POST",
     mode: "cors",
@@ -176,7 +188,7 @@ export const addUser = (data) => async (dispatch) => {
 };
 
 export const loginUser = (data) => async (dispatch) => {
-  let url = `<endpoint URL>`;
+  let url = `<Insert endopoint url>/loginUser`;
   fetch(url, {
     method: "POST",
     mode: "cors",
@@ -231,3 +243,5 @@ export const loadDataFromLocalStorage = () => ({
 export const logoutUser = () => ({ type: "LOGOUT_USER" });
 
 export const clearFilteredList = () => ({ type: "CLEAR_FILTERED_LIST" });
+
+export const clearServiceList = () => ({ type: "CLEAR_SERVICE_LIST" });

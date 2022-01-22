@@ -18,27 +18,17 @@ const SideBar = ({ toogleSideBar }) => {
           </li>
           <li>
             <NavLink to={process.env.PUBLIC_URL + "/"}>
-              <button>Home</button>
+              <button>Groups</button>
             </NavLink>
           </li>
           <li>
             <NavLink to={process.env.PUBLIC_URL + "/"}>
-              <button>Home</button>
+              <button>Labels</button>
             </NavLink>
           </li>
           <li>
             <NavLink to={process.env.PUBLIC_URL + "/"}>
-              <button>Home</button>
-            </NavLink>
-          </li>
-          <li>
-            <NavLink to={process.env.PUBLIC_URL + "/"}>
-              <button>Home</button>
-            </NavLink>
-          </li>
-          <li>
-            <NavLink to={process.env.PUBLIC_URL + "/"}>
-              <button>Home</button>
+              <button>Settings</button>
             </NavLink>
           </li>
         </ul>

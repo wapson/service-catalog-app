@@ -9,8 +9,14 @@ const FormButtons = ({
 }) => {
   return (
     <S.FormButtons>
-      <S.Button onClick={primaryButtonAction}>{primaryButtonText}</S.Button>
-      <S.Button onClick={secondaryButtonAction}>{secondaryButtonText}</S.Button>
+      {primaryButtonText && (
+        <S.Button onClick={primaryButtonAction}>{primaryButtonText}</S.Button>
+      )}
+      {secondaryButtonText && (
+        <S.Button onClick={secondaryButtonAction}>
+          {secondaryButtonText}
+        </S.Button>
+      )}
     </S.FormButtons>
   );
 };

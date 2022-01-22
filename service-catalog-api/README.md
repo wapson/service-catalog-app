@@ -5,10 +5,7 @@ Service - catalog is a centralized catalog of services allowing you to discover 
 1. `pkg/api/middlewares/middlewares.go` file should contains provided secure string for JWT purposes (line 11). We recommend to store it safely.
 2. `pkg/database/connection.go` file should contains url link to *mongoDB* database (line 14). 
 
-
-## Documentation
-
-### Services endpoints
+## Services endpoints
 | METHOD | Endpoint name  | Description                           | Input                                                 | Output  |
 |--------|----------------|---------------------------------------|-------------------------------------------------------|---------|
 | POST   | /addService    | Adds single service                   | JSON object (Entry) as body payload             |Status 201 - Body (Newly created service as JSON object(Entry))|
@@ -16,8 +13,7 @@ Service - catalog is a centralized catalog of services allowing you to discover 
 | POST   | /updateService | Updates single service of chosen id   | JSON object (Entry) as body payload             |Status 200 - Body (Updated service as JSON object(Entry))         |
 | GET    | /listServices  | Lists all aviable services            | page = ? as Query param   eg. /lisetServices?page=3                                               |Status 200 - Body (JSON Array of service objects(Entry))       |
 | GET    | /getService    | Returns single service of chosen name | name as a query param eg. /getService?name=1234 |Status 200 - Body (Service as JSON object(Entry))         |
-
-### User endpoints
+## User endpoints
 | METHOD | Endpoint name | Description                         | Input                                        | Output          |
 |--------|---------------|-------------------------------------|----------------------------------------------|-----------------|
 | POST   | /addUser      | Adds user                           | JSON object (User) as body payload     |Status 201 - Body ( Newly created user as JSON object(User) )|
@@ -25,7 +21,7 @@ Service - catalog is a centralized catalog of services allowing you to discover 
 | GET    | /updateUser   | Updates user                        | JSON object (Entry) as body payload    |Status 200 - Body ( Updated user as JSON object(User) )|
 | POST   | /loginUser    | Log in user                         | JSON object (User) as body body payload      |Status 201 - Body ( Logged user info as JSON object (User)) |
 
-### Schemas
+# Schemas
 Label
 | Name              | Type               |
 |-------------------|--------------------|
@@ -72,3 +68,4 @@ JwtCustomClaims
 | Issuer            | string             |
 | NotBefore         | int64              |
 | Subject           | string             |
+

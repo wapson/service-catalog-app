@@ -2,7 +2,6 @@ import { NavLink } from "react-router-dom";
 import PropTypes from "prop-types";
 import { useSelector, useDispatch } from "react-redux";
 
-import SearchBar from "../SearchBar/SearchBar";
 import * as S from "./NavBar.style";
 import { logoutUser } from "../../store/actions/actions";
 import { isAuthenticatedSelector } from "./../../store/selectors/auth";
@@ -11,9 +10,7 @@ const NavBar = ({
   openAddServiceModal,
   openAuthenticateModal,
   toogleSideBar,
-  setFilter,
-  filter,
-  setFilterType,
+  openServicesFilteredListModal,
 }) => {
   const isAuthenticated = useSelector(isAuthenticatedSelector);
   const dispatch = useDispatch();
@@ -28,11 +25,12 @@ const NavBar = ({
             <S.Icon className="fas fa-book-open"></S.Icon>
           </NavLink>
           <S.ListItem>
-            <SearchBar
-              setFilter={setFilter}
-              setFilterType={setFilterType}
-              filter={filter}
-            />
+            <S.Button
+              onClick={openServicesFilteredListModal}
+              data-tooltip="Search for service"
+            >
+              <S.Icon className="fas fa-search"></S.Icon>{" "}
+            </S.Button>
           </S.ListItem>
         </S.NavSide>
         <S.NavSide>
@@ -77,9 +75,6 @@ const NavBar = ({
 NavBar.propTypes = {
   openAddServicemodal: PropTypes.func,
   toogleSideBar: PropTypes.func,
-  setFilter: PropTypes.func,
-  setFilterType: PropTypes.func,
-  filter: PropTypes.string,
 };
 
 export default NavBar;

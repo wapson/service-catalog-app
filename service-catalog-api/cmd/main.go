@@ -19,7 +19,7 @@ import (
 // @license.name Apache 2.0
 // @license.url http://www.apache.org/licenses/LICENSE-2.0.html
 
-// @host https://github.com/wapson/service-catalog/service-catalog-api
+// @host https://github.com/wapson/service-catalog-app/service-catalog-api
 // @BasePath /v2
 
 func main() {

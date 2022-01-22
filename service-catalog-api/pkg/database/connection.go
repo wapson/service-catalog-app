@@ -11,7 +11,7 @@ import (
 )
 
 func Connect() *mongo.Client {
-	URI := "<Mongo DB Address>"
+	URI := ""
 	clientOptions := options.Client().ApplyURI(URI)
 
 	client, err := mongo.Connect(context.TODO(), clientOptions)

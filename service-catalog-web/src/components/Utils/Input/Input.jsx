@@ -9,7 +9,13 @@ const Input = ({ type = "text", ...rest }, ref) => {
 
   return (
     <>
-      <S.Input {...rest} ref={ref} isPassword type={inputType} />
+      <S.Input
+        {...rest}
+        ref={ref}
+        isPassword
+        type={inputType}
+        autoComplete="off"
+      />
       {isPassword && (
         <S.InputVisibility onClick={handleToggleVisibility}>
           {inputType === "password" ? (

@@ -25,14 +25,14 @@ const SingleService = ({
 
   const { id } = useSelector(authSelector);
 
-  const isEditable = id === data.ownerid;
+  const isEditable = id === data?.ownerid;
 
   const handleShowMoreInfo = () => setIsOpen(true);
 
   const handleHideMoreInfo = () => setIsOpen(false);
 
   const handleDeleteService = () => {
-    dispatch(deleteService({ id: data.id }));
+    dispatch(deleteService({ id: data?.id }));
     setIsConfirmModalOpen(false);
   };
 
@@ -58,25 +58,25 @@ const SingleService = ({
             <div className="left-column">
               <header className="header">
                 {isEditable && <i className="fas fa-user"></i>}
-                <h1>{data.shortname}</h1>
-                <h1> {data.name}</h1>
+                <h1>{data?.shortname}</h1>
+                <h1> {data?.name}</h1>
               </header>
               <div className="labels">
-                {data.labels?.map((label, index) => (
+                {data?.labels?.map((label, index) => (
                   <Styledlabel key={index}>{label}</Styledlabel>
                 ))}
               </div>
             </div>
             <div className="right-column">
-              <p className="description"> {data.description}</p>
+              <p className="description"> {data?.description}</p>
             </div>
           </div>
           <div className="second-row">
             <div className="second-row--info info">
               <div className="info--title">Code Owners</div>
               <div className="info--description labels">
-                {data.codeowners
-                  ? data.codeowners.map((codeOwner, index) => (
+                {data?.codeowners
+                  ? data?.codeowners.map((codeOwner, index) => (
                       <p className="label" key={codeOwner + index}>
                         {codeOwner}
                       </p>
@@ -87,11 +87,11 @@ const SingleService = ({
             <div className="second-row--info info">
               <div className="info--title">Documentation Urls</div>
               <div className="info--description labels">
-                {data.documentationurls
-                  ? data.documentationurls.map((docUrl, index) => (
+                {data?.documentationurls
+                  ? data?.documentationurls.map((docUrl, index) => (
                       <a
-                        target="_blank"
-                        href={getClickableLink(docUrl)}
+                        target={docUrl ? "_blank" : "_self"}
+                        href={docUrl ? getClickableLink(docUrl) : "#"}
                         className="label label__link "
                         key={docUrl + index}
                         rel="noreferrer"
@@ -105,25 +105,29 @@ const SingleService = ({
             <div className="second-row--info info">
               <div className="info--title">Repository Url</div>
               <a
-                target="_blank"
-                href={getClickableLink(data.repositoryurl)}
+                target={data?.repositoryurl ? "_blank" : "_self"}
+                href={
+                  data?.repositoryurl
+                    ? getClickableLink(data?.repositoryurl)
+                    : "#"
+                }
                 className="info--description link"
                 rel="noreferrer"
               >
-                {data.repositoryurl ? data.repositoryurl : "-"}
+                {data?.repositoryurl ? data?.repositoryurl : "-"}
               </a>
             </div>
             <div className="second-row--info info">
               <div className="info--title">Added date</div>
               <div className="info--description">
-                {dayjs(data.timestampadded).format("MMM D, YYYY h:mm A")}
+                {dayjs(data?.timestampadded).format("MMM D, YYYY h:mm A")}
               </div>
             </div>
             <div className="second-row--info info">
               <div className="info--title">Modified date</div>
               <div className="info--description">
-                {data.timestampchanged
-                  ? dayjs(data.timestampchanged).format("MMM D, YYYY h:mm A")
+                {data?.timestampchanged
+                  ? dayjs(data?.timestampchanged).format("MMM D, YYYY h:mm A")
                   : "-"}
               </div>
             </div>
@@ -145,12 +149,12 @@ const SingleService = ({
       </S.SingleService>
       {isConfirmModalOpen && (
         <InformationModal
-          title="Are you sure?"
-          description={`Are you sure you want to delete ${data.shortname}?`}
-          primaryButtonText="Yes"
-          secondaryButtonText="No"
-          primaryButtonAction={handleDeleteService}
-          secondaryButtonAction={() => setIsConfirmModalOpen(false)}
+          title="Are You Sure?"
+          description={`Are you sure you want to delete ${data?.name} `}
+          primaryButtonText="No"
+          secondaryButtonText="Yes"
+          primaryButtonAction={() => setIsConfirmModalOpen(false)}
+          secondaryButtonAction={handleDeleteService}
           closeModal={() => setIsConfirmModalOpen(false)}
         />
       )}

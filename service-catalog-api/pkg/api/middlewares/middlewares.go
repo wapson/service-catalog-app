@@ -8,7 +8,7 @@ import (
 
 func SetAuthMiddlewares (e *echo.Echo) {
 	e.Use(middleware.JWTWithConfig(middleware.JWTConfig{
-  	SigningKey: []byte("secret"), // Secret needs to be provided
+  	SigningKey: []byte("secret"),
   	Claims: &schemas.JwtCustomClaims{},
 	}))
 }

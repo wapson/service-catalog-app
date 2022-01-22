@@ -47,7 +47,7 @@ type swaggerInfo struct {
 // SwaggerInfo holds exported Swagger Info so clients can modify it
 var SwaggerInfo = swaggerInfo{
 	Version:     "0.1",
-	Host:        "https://github.com/wapson/service-catalog-api/service-catalog-api",
+	Host:        "https://github.com/wapson/service-catalog/service-catalog-api",
 	BasePath:    "/v2",
 	Schemes:     []string{},
 	Title:       "Service catalog API",

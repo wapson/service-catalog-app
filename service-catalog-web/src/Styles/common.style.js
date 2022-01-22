@@ -31,3 +31,7 @@ export const Inputlabel = styled.label`
   margin: 1rem;
   font-size: 1.5rem;
 `;
+
+export const HorizontalLine = styled.hr`
+  margin-bottom: 2rem;
+`;

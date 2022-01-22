@@ -1,10 +1,9 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
-import debounce from "lodash.debounce";
-import { Switch, Route } from "react-router-dom";
 
 import NavBar from "./components/NavBar/NavBar";
+import FilteredServicesList from "./components/FilteredServicesList/FilteredServicesList";
 import AddServiceModal from "./components/AddServiceModal/AddServiceModal";
 import SideBar from "./components/SideBar/SideBar";
 import RecentlyAddedList from "./components/RecentlyAddedList/RecentlyAddedList";
@@ -14,15 +13,9 @@ import Loader from "./components/Loader/Loader";
 import Snackbar from "./components/Utils/Snackbar/Snackbar";
 
 import { isLoadingSelector } from "./store/selectors/loadingReducer";
-import { servicesListSelector } from "./store/selectors/servicesList";
 import { isSnackbarShownSelector } from "./store/selectors/isSnackbarShown";
-import { filteredServicesListSelector } from "./store/selectors/filteredServicesList";
 
-import {
-  listServices,
-  loadDataFromLocalStorage,
-  clearFilteredList,
-} from "./store/actions/actions";
+import { loadDataFromLocalStorage } from "./store/actions/actions";
 
 const StyledApp = styled.div`
   background-color: ${(props) => props.theme.lightDarkColor};
@@ -79,17 +72,13 @@ const StyledAppContent = styled.div`
 
 const App = () => {
   const isLoading = useSelector(isLoadingSelector);
-  const servicesList = useSelector(servicesListSelector);
   const isSnackbarShown = useSelector(isSnackbarShownSelector);
-  const filteredServicesList = useSelector(filteredServicesListSelector);
 
   const [isAddServiceModalOpen, setIsAddServiceModalOpen] = useState(false);
   const [isAuthenticateModalOpen, setIsAuthenticateModalOpen] = useState(false);
   const [isSideBarOpen, setIsSideBarOpen] = useState(false);
-  const [filter, setFilter] = useState("");
-  const [filterType, setFilterType] = useState("name");
-
-  const wasFilterCleared = !!filteredServicesList.length && !filter.length;
+  const [isFilteredServicesListModalOpen, setIsFilteredServicesListModalOpen] =
+    useState(false);
 
   const [dataToUpdate, setDataToUpdate] = useState(null);
 
@@ -98,29 +87,9 @@ const App = () => {
   const toogleSideBarHandler = () =>
     setIsSideBarOpen((prevState) => !prevState);
 
-  const getServices = useCallback(
-    async (name, filterType = null) => {
-      if (filterType === "label") {
-        await dispatch(listServices({ label: name }));
-      } else await dispatch(listServices({ name }));
-    },
-    [dispatch]
-  );
-
-  const debounceFn = useCallback(debounce(getServices, 800), []);
-
   useEffect(() => {
     dispatch(loadDataFromLocalStorage());
   }, [dispatch]);
-
-  useEffect(() => {
-    getServices();
-  }, [getServices]);
-
-  useEffect(() => {
-    filter && debounceFn(filter, filterType);
-    wasFilterCleared && dispatch(clearFilteredList());
-  }, [debounceFn, dispatch, filter, filterType, wasFilterCleared]);
 
   return (
     <StyledApp>
@@ -128,9 +97,9 @@ const App = () => {
         openAddServiceModal={() => setIsAddServiceModalOpen(true)}
         openAuthenticateModal={() => setIsAuthenticateModalOpen(true)}
         toogleSideBar={toogleSideBarHandler}
-        setFilter={setFilter}
-        filter={filter}
-        setFilterType={setFilterType}
+        openServicesFilteredListModal={() =>
+          setIsFilteredServicesListModalOpen(true)
+        }
       />
       {isAddServiceModalOpen && (
         <AddServiceModal
@@ -147,23 +116,23 @@ const App = () => {
       {isSideBarOpen && <SideBar toogleSideBar={toogleSideBarHandler} />}
       {isLoading && <Loader />}
       {isSnackbarShown && <Snackbar />}
-      <StyledAppContent>
-        <RecentlyAddedList
-          servicesList={servicesList}
+      {isFilteredServicesListModalOpen && (
+        <FilteredServicesList
+          closeModal={() => setIsFilteredServicesListModalOpen(false)}
           setDataToUpdate={setDataToUpdate}
           setIsAddServiceModalOpen={setIsAddServiceModalOpen}
         />
-        <Switch>
-          <Route exact path={process.env.PUBLIC_URL + "/"}>
-            <ServicesList
-              setIsAddServiceModalOpen={setIsAddServiceModalOpen}
-              setDataToUpdate={setDataToUpdate}
-              filter={filter}
-              filterType={filterType}
-              listLength={servicesList.length}
-            />
-          </Route>
-        </Switch>
+      )}
+      <StyledAppContent>
+        <RecentlyAddedList
+          setDataToUpdate={setDataToUpdate}
+          setIsAddServiceModalOpen={setIsAddServiceModalOpen}
+        />
+
+        <ServicesList
+          setIsAddServiceModalOpen={setIsAddServiceModalOpen}
+          setDataToUpdate={setDataToUpdate}
+        />
       </StyledAppContent>
     </StyledApp>
   );

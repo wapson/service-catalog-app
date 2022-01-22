@@ -15,7 +15,7 @@
         },
         "version": "0.1"
     },
-    "host": "https://github.com/wapson/service-catalog/service-catalog-api",
+    "host": "https://github.com/wapson/service-catalog-app/service-catalog-api",
     "basePath": "/v2",
     "paths": {}
 }
